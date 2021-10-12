@@ -12,10 +12,10 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if( request('q') ){
-            $tasks = Tasks::where('name','like','%'.request('q').'%')->paginate(10);
+        if($search = $request->input('q') ){
+            $tasks = Tasks::where('name', 'like', '%' . $search . '%')->paginate(10);
             return response()->json($tasks);   
         }else{
             return $this->refresh();
